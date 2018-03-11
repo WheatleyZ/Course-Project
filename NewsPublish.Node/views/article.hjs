@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>{{ title }}</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel='stylesheet' href='https://fonts.proxy.ustclug.org/earlyaccess/notosanssc.css'>
+</head>
+
+<body style="font-family:Noto Sans SC">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="" style="margin:0px 20px">
+			<img src="/images/brand.svg" width="30" height="30" alt="Nw" style="vertical-align:bottom"> 新闻头条
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+		 aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">首页</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/about">关于</a>
+					<li class="nav-item">
+						<a href="/managing" class="nav-link">进入后台</a>
+					</li>
+				</li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" placeholder="文章标题，内容……" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container">
+		{{#article}}
+		<div class="card" style="margin:20px 10px">
+			<div class="card-body normal">
+				<h1>{{title}}</h1>
+				<h6>Editor: {{editor}}</h6>
+				<p>{{content}}</p>
+			</div>
+		</div>
+		{{/article}} {{#error}}
+		<div class="alert alert-danger" role="alert" style="margin:20px 0px">
+			<h4 class="alert-heading">An Error Occured!</h4>
+			<p>Error Message: {{e}}</p>
+		</div>
+		{{/error}}
+	</div>
+</body>
+<script src="/javascripts/jquery.slim.min.js"></script>
+<script src="/javascripts/popper.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function () {
+
+	});
+</script>
+
+</html>

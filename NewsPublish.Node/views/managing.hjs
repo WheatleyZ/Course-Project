@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>{{ title }}</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel='stylesheet' href='https://fonts.proxy.ustclug.org/earlyaccess/notosanssc.css'>
+</head>
+
+<body style="background:#212529;font-family:Noto Sans SC">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+		<a class="navbar-brand" href="/" style="margin:0px 20px">
+			<img src="/images/brand.svg" width="30" height="30" alt="Nw" style="vertical-align:bottom"> 新闻头条
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+		 aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">回到首页</a>
+				</li>
+			</ul>
+			<ul class="nav justify-content-end">
+				<li>
+					<button type="button" class="btn btn-outline-success" onclick="window.location.href='/managing/edit?id=0'">添加文章</button>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<table class="table table-striped table-dark">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">文章名</th>
+					<th scope="col">作者</th>
+					<th scope="col">日期</th>
+					<th scope="col">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#content}}
+				<tr>
+					<th scope="row">{{id}}</th>
+					<td>{{title}}</td>
+					<td>{{editor}}</td>
+					<td>{{time}}</td>
+					<td>
+						<button class="btn btn-sm btn-primary" id="{{id}}edit" onclick="window.location.href='/managing/edit?id={{id}}'">编辑</button>
+						<button class="btn btn-sm btn-danger deletebtn" id="{{id}}">删除</button>
+					</td>
+				</tr>
+				{{/content}}
+			</tbody>
+		</table>
+	</div>
+</body>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/popper.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.deletebtn').click(function () {
+			$.post("/managing/delete", {
+				"id": $(this).attr("id")
+			}, function (data,status) {
+				if(data=="成功"){
+					alert("删除成功");
+				}
+				else{
+					alert("删除失败\n"+data);
+				}
+				location.reload();
+			});
+		});
+	});
+</script>
+
+</html>

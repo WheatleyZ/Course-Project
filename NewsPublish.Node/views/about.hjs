@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>{{ title }}</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel='stylesheet' href='https://fonts.proxy.ustclug.org/earlyaccess/notosanssc.css'>
+</head>
+
+<body style="font-family:Noto Sans SC">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="/" style="margin:0px 20px">
+		<img src="/images/brand.svg" width="30" height="30" alt="Nw" style="vertical-align:bottom">
+			新闻头条
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/">首页</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">关于</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container" style="padding:20px 20px">
+		<div class="jumbotron card">
+			<h1 class="display-4">新闻发布系统</h1>
+			<p class="lead">基于Web的新闻发布系统课程设计</p>
+			<hr class="my-4">
+			<p>2015211911 郑少龙</p>
+		</div>
+	</div>
+</body>
+<script src="/javascripts/jquery.slim.min.js"></script>
+<script src="/javascripts/popper.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+
+</html>

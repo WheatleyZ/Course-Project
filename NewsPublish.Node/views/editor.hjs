@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>{{ title }}</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/javascripts/google-code-prettify/prettify.css">
+	<link rel='stylesheet' href='https://fonts.proxy.ustclug.org/earlyaccess/notosanssc.css'>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body style="background:#212529;font-family:Noto Sans SC">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+		<a class="navbar-brand" href="/" style="margin:0px 20px">
+			<img src="/images/brand.svg" width="30" height="30" alt="Nw" style="vertical-align:bottom"> 新闻头条
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+		 aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/managing">返回</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		{{#error}}
+		<div class="jumbotron alert-danger mt-4">
+			<h1 class="display-4">出错了</h1>
+			<p class="lead">{{error}}</p>
+			<hr class="my-4">
+			<p>{{errmsg}}</p>
+			<p class="lead">
+				<a class="btn btn-primary btn-lg" href="/managing" role="button">退出</a>
+			</p>
+		</div>
+		{{/error}} {{#editor}}
+		<div class="card bg-dark" style="margin:20px 0px">
+			<div class="card-header">
+				<div class="input-group mb-3" style="margin-bottom:0rem!important">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">文章标题 :</span>
+					</div>
+					<input type="text" class="form-control bg-dark text-white" placeholder="标题" aria-label="标题" id="heading" value="{{heading}}">
+					<div class="input-group-append">
+						<button type="button" class="btn btn-success" id="savebtn" contentid="{{id}}">保存</button>
+					</div>
+				</div>
+				<div id="emptycont" class="alert alert-danger" role="alert" style="margin-bottom:0rem!important;margin:5px 0px;display:none">
+					标题不可以为空的哟～
+				</div>
+			</div>
+			<div class="card-body" style="background:#212529">
+				{{!-- toolbar --}}
+				<div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+					<div class="btn-group">
+						<a class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" title="Font" id="fonts">
+							<i class="icon-font"></i>
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="fonts">
+							<h6 class="dropdown-header">字体选择 :</h6>
+						</ul>
+					</div>
+					<div class="btn-group">
+						<a class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" title="Font Size" id="size">
+							<i class="icon-text-height"></i>&nbsp;
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="size">
+							<h6 class="dropdown-header">字体大小 :</h6>
+							<li>
+								<a class="dropdown-item" data-edit="fontSize 5">
+									<font size="5">Huge</font>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" data-edit="fontSize 3">
+									<font size="3">Normal</font>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item" data-edit="fontSize 1">
+									<font size="1">Small</font>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-group">
+						<a class="btn btn-secondary" data-edit="bold" title="Bold (Ctrl/Cmd+B)">
+							<i class="icon-bold"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="italic" title="Italic (Ctrl/Cmd+I)">
+							<i class="icon-italic"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="strikethrough" title="Strikethrough">
+							<i class="icon-strikethrough"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="underline" title="Underline (Ctrl/Cmd+U)">
+							<i class="icon-underline"></i>
+						</a>
+					</div>
+					<div class="btn-group">
+						<a class="btn btn-secondary" data-edit="insertunorderedlist" title="Bullet list">
+							<i class="icon-list-ul"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="insertorderedlist" title="Number list">
+							<i class="icon-list-ol"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="outdent" title="Reduce indent (Shift+Tab)">
+							<i class="icon-indent-left"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="indent" title="Indent (Tab)">
+							<i class="icon-indent-right"></i>
+						</a>
+					</div>
+					<div class="btn-group">
+						<a class="btn btn-secondary" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">
+							<i class="icon-align-left"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">
+							<i class="icon-align-center"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">
+							<i class="icon-align-right"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)">
+							<i class="icon-align-justify"></i>
+						</a>
+					</div>
+					<div class="btn-group">
+						<a class="btn btn-secondary" data-toggle="dropdown" title="Hyperlink">
+							<i class="icon-link"></i>
+						</a>
+
+						<div class="dropdown-menu input-append" style="padding:0%">
+							<div class="input-group">
+								<input class="form-control" placeholder="URL" type="text" data-edit="createLink" />
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button">Add</button>
+								</div>
+							</div>
+						</div>
+						<a class="btn btn-secondary" data-edit="unlink" title="Remove Hyperlink">
+							<i class="icon-cut"></i>
+						</a>
+					</div>
+					<div style="margin: 0px 10px 15px 0px;">
+						<a class="btn btn-secondary" title="点击或拖动来添加图片" id="pictureBtn">
+							<i class="icon-picture"></i>
+						</a>
+						<input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 43px; height: 38px;"
+						/>
+					</div>
+					<div class="btn-group">
+						<a class="btn btn-secondary" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">
+							<i class="icon-undo"></i>
+						</a>
+						<a class="btn btn-secondary" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">
+							<i class="icon-repeat"></i>
+						</a>
+					</div>
+					<input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+				</div>
+				{{!-- end of toolbar --}}
+				<div id="editor">{{{content}}}</div>
+			</div>
+		</div>
+		{{/editor}}
+	</div>
+</body>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/popper.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/javascripts/bootstrap-wysiwyg.js"></script>
+<script src="/javascripts/jquery.hotkeys.js"></script>
+<script>
+	$(document).ready(function () {
+
+		function initToolbarBootstrapBindings() {
+			var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+				'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+				'Times New Roman', 'Verdana'],
+				fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+			$.each(fonts, function (idx, fontName) {
+				fontTarget.append($('<li><a class="dropdown-item" data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+			});
+			$('a[title]').tooltip({ container: 'body' });
+			$('.dropdown-menu input').click(function () { return false; })
+				.change(function () { $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle'); })
+				.keydown('esc', function () { this.value = ''; $(this).change(); });
+
+			$('[data-role=magic-overlay]').each(function () {
+				var overlay = $(this), target = $(overlay.data('target'));
+				overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+			});
+			$('#voiceBtn').hide();
+			// if ("onwebkitspeechchange"  in document.createElement("input")) {
+			//   var editorOffset = $('#editor').offset();
+			//   $('#voiceBtn').css('position','absolute').offset({top: editorOffset.top, left: editorOffset.left+$('#editor').innerWidth()-35});
+			// } else {
+			//   $('#voiceBtn').hide();
+			// }
+		};
+		initToolbarBootstrapBindings();
+		$('#editor').wysiwyg();
+		window.prettyPrint && prettyPrint();
+		$('#savebtn').click(
+			function () {
+				if ($('#heading').val() == "") {
+					$('#emptycont').css("opacity", "100");
+					$('#emptycont').slideDown(500);
+					$('#emptycont').animate({
+						opacity: '0.0'
+					}, 2000);
+					$('#emptycont').slideUp(500);
+				}
+				else {
+					$.post("/managing/post", {
+						"id": $('#savebtn').attr("contentid"),
+						"title": $('#heading').val(),
+						"content": $('#editor').html()
+					}, function (data, status) {
+						alert("data:" + data + "\nstatus:" + status);
+					});
+				}
+			}
+		);
+	});
+</script>
+
+</html>

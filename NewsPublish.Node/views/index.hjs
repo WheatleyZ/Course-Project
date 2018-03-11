@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel='stylesheet' href='https://fonts.proxy.ustclug.org/earlyaccess/notosanssc.css'>
+</head>
+
+<body style="font-family:Noto Sans SC">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <a class="navbar-brand" href="/" style="margin:0px 20px">
+      <img src="/images/brand.svg" width="30" height="30" alt="Nw" style="vertical-align:bottom"> 新闻头条
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">首页</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">关于</a>
+        </li>
+      </ul>
+      {{#search}}
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="文章标题，内容……" aria-label="Search" id="search" value="{{text}}">
+        <button type="submit" class="btn btn-success my-2 my-sm-0" id="searchbtn">搜索</button>
+      </form>
+      {{/search}}
+    </div>
+  </nav>
+  <main class="container" id="maindisp">
+    {{#article}}
+    <div class="container articlecontent" style="margin:20px 10px" id="{{id}}">
+      <h2>
+        <a href="/article?id={{id}}">{{title}}</a>
+      </h2>
+      <h6>Editor: {{editor}}</h6>
+      <div class="content" style="display:none">
+        {{{content}}}
+      </div>
+    </div>
+    {{/article}} {{#singlearticle}}
+    <div class="card" style="margin:20px 10px">
+      <div class="card-body">
+        <h1>{{title}}</h1>
+        <h6>Editor: {{editor}}</h6>
+        <p>{{{content}}}</p>
+      </div>
+    </div>
+    {{/singlearticle}} {{#error}}
+    <div class="alert alert-danger" role="alert" style="margin:20px 0px">
+      <h4 class="alert-heading">An Error Occured!</h4>
+      <p>Error Message: {{e}}</p>
+    </div>
+    {{/error}}
+  </main>
+</body>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/popper.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+<script src="/javascripts/hogan-3.0.2.js"></script>
+<script>
+  jQuery(document).ready(function () {
+    $('#searchbtn').click(function (e) {
+      e.preventDefault();
+      if ($('#search').val() != "") {
+        location.href = "/search?text=" + $('#search').val();
+      }
+      else {
+        location.href = "/";
+      }
+    });
+    $('#search').keypress(function (e) {
+      if (e.keyCode == 13) {
+        e.preventDefault();
+        if ($('#search').val() != "") {
+          location.href = "/search?text=" + $('#search').val();
+        }
+        else {
+          location.href = "/";
+        }
+      }
+    });
+    $('.articlecontent div').each(function () {
+      var t = $(this).children().first().text().slice(0, 100);
+      if (t.length == 100) {
+        t = t + "...";
+      }
+      $(this).children().remove();
+      $(this).append("<p>" + t + "</p>");
+      $(this).css("opacity", "0");
+      $(this).slideDown(1000);
+      $(this).animate({
+        opacity: '100'
+      }, 2000);
+    });
+  });
+</script>
+
+</html>
