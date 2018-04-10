@@ -7,11 +7,16 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "bootstrap": "^4.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "grunt": "^1.0.2",
     "hjs": "~0.0.6",
+    "jquery": "^3.3.1",
     "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
+    "popper.js": "^1.12.9",
     "serve-favicon": "~2.4.5"
   }
 }
