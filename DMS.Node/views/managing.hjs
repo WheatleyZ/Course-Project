@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>{{ title }}</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+	<link rel='stylesheet' href='https://fonts.proxy.ustclug.org/earlyaccess/notosanssc.css'>
+	<style>
+		.hidden {
+			display: none;
+		}
+
+		.grid {
+			display: grid;
+			margin: 0;
+			grid-template-columns: repeat(auto-fill, [col-start] minmax(40vh, 1fr) [col-end]);
+			grid-gap: 1rem;
+			margin: .5rem;
+		}
+	</style>
+</head>
+
+<body class="bg-info p-0" style="font-family:Noto Sans SC">
+	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">
+			<img src="/images/brand.svg" class="ml-3 mr-2" width="30" height="30" alt="Nw" style="vertical-align:bottom">宿舍管理系统
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+		 aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/">主页
+						<span class="sr-only">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item dropdown active">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+					 aria-expanded="false">
+						管理
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<h6 class="dropdown-header">管理</h6>
+						<a class="dropdown-item" href="#">管理页面</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/managing/repair">维修填报</a>
+						<a class="dropdown-item" href="/managing/visit">访客登记</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+					 aria-expanded="false">
+						申请
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/requests/repair">维修填报</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/requests/visit">访客登记</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container p-0 mb-5">
+		<div class="grid">
+			{{!-- 列表开始 --}} {{#room}}
+			<div class="card bg-dark text-light m-3">
+				<div class="card-header">
+					<span class="clearfix">
+						<h2>
+							<span class="badge badge-primary">宿舍名</span>
+							{{roomname}}
+							<button class="mb-2 btn btn-outline-success expand-toggle float-right">展开</button>
+						</h2>
+					</span>
+					<h6 class="float-right">
+						<span class="badge badge-light">宿舍楼</span>
+						{{dormno}}
+						<span class="badge badge-light">宿舍号</span>
+						{{roomno}}
+						<span class="badge badge-light">人数</span>
+						{{roomcount}} {{#repairrequest}}
+						<span class="badge badge-danger" style="cursor:pointer" data-toggle="tooltip" data-placement="top" title="{{repairitem}}">维修申请</span>
+						{{repairrequest}} {{/repairrequest}} {{^repairrequest}}
+						<span class="badge badge-light">维修申请</span>
+						0 {{/repairrequest}}
+					</h6>
+				</div>
+				<div class="card-body hidden">
+					<table class="table table-striped table-dark">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">姓名</th>
+								<th scope="col">学号</th>
+								<th scope="col">性别</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#student}}
+							<tr>
+								<th scope="row">{{num}}</th>
+								<td>{{name}}</td>
+								<td>{{id}}</td>
+								<td>{{gender}}</td>
+							</tr>
+							{{/student}}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			{{/room}} {{!-- 列表结束 --}}
+		</div>
+				 {{#repair}}
+				<div class="card bg-dark text-white">
+					<div class="card-header">
+						<h5 class="card-title mt-2">维修申请系统
+							<span class="float-right">
+								<button class="btn btn-outline-success expand-toggle">填写维修申请信息</button>
+							</span>
+						</h5>
+					</div>
+					<div class="card-body hidden">
+						<div class="row">
+							<div class="col-lg">
+								<form>
+									<div class="form-group">
+										<label for="name">姓名</label>
+										<input class="form-control bg-dark text-light" id="name" placeholder="姓名">
+									</div>
+									<div class="form-group">
+										<label for="room">宿舍</label>
+										<input class="form-control bg-dark text-light" id="room" placeholder="宿舍号">
+									</div>
+									<div class="form-group">
+										<label for="item">报修项目</label>
+										<input type="text" class="form-control bg-dark text-light" id="item" placeholder="报修项目">
+									</div>
+								</form>
+							</div>
+							<div class="col-lg">
+								<form>
+									<div class="form-group">
+										<label for="reason">报修原因</label>
+										<textarea class="form-control bg-dark text-light" id="reason" rows="3"></textarea>
+									</div>
+								</form>
+								<button type="button" class="btn btn-success float-right">提交</button>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<table class="table table-dark">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">寝室号</th>
+									<th scope="col">报修人</th>
+									<th scope="col">报修项目</th>
+									<th scope="col">报修原因</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{#repairdetail}}
+								<tr>
+									<th scope="row">{{id}}</th>
+									<td>{{room}}</td>
+									<td>{{name}}</td>
+									<td>{{item}}</td>
+									<td>
+										<button type="button" class="btn btn-sm btn-danger" data-toggle="popover" title="报修原因" data-content="{{reason}}">点击展开</button>
+									</td>
+								</tr>
+								{{/repairdetail}}
+							</tbody>
+						</table>
+					</div>
+					{{/repair}} {{#visitor}}
+					<div class="card bg-dark text-white">
+						<div class="card-header">
+							<h5 class="card-title mt-2">访客登记系统
+								<span class="float-right">
+									<button class="btn btn-outline-success expand-toggle">填写来访者信息</button>
+								</span>
+							</h5>
+						</div>
+						<div class="card-body hidden">
+							<div class="row">
+								<div class="col-lg">
+									<form>
+										<div class="form-group">
+											<label>姓名</label>
+											<input class="form-control bg-dark text-white" id="name" placeholder="姓名">
+										</div>
+										<div class="form-group">
+											<label>性别</label>
+											<div class="btn-group container" style="margin:5px 0px;padding:0px">
+												<button type="button" id="male" class="btn btn-primary">男</button>
+												<button type="button" id="female" class="btn btn-secondary">女</button>
+											</div>
+										</div>
+										<div class="form-group">
+											<label>联系方式</label>
+											<input type="text" class="form-control bg-dark text-white" id="contact" placeholder="联系方式">
+										</div>
+									</form>
+								</div>
+								<div class="col-lg">
+									<form>
+										<div class="form-group">
+											<label>来访时间</label>
+											<input type="datetime-local" class="form-control bg-dark text-white" id="intime">
+										</div>
+										<div class="form-group">
+											<label>离开时间</label>
+											<input type="datetime-local" class="form-control bg-dark text-white" id="outtime">
+										</div>
+										<div class="form-group">
+											<label>来访事由</label>
+											<textarea class="form-control bg-dark text-white" id="exampleFormControlTextarea1" rows="3"></textarea>
+										</div>
+									</form>
+								</div>
+							</div>
+							<button id="ok" type="button" class="btn btn-success float-right" style="margin:0px 15px">提交</button>
+						</div>
+						<div class="card-body">
+							<table class="table table-dark">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">访客姓名</th>
+										<th scope="col">到访时间</th>
+										<th scope="col">离开时间</th>
+										<th scope="col">联系方式</th>
+										<th scope="col">来访事由</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{#visitordetail}}
+									<tr>
+										<th scope="row">{{id}}</th>
+										<td>{{name}}</td>
+										<td>{{arrive}}</td>
+										<td>{{leave}}</td>
+										<td>{{contact}}</td>
+										<td>
+											<button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="来访事由" data-content="{{reason}}">点击展开</button>
+										</td>
+									</tr>
+									{{/visitordetail}}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					{{/visitor}}
+	</div>
+	{{!-- 快捷方式 --}}{{#managing}}
+	<div class="dropdown show list-group fixed-bottom p-2">
+		<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+		 aria-expanded="false">
+			宿舍列表
+		</a>
+
+		<div class="dropdown-menu p-0" id="room-list" aria-labelledby="dropdownMenuLink">
+			{{#room}}
+			<a class="list-group-item list-group-item-dark" href="#{{id}}">宿舍号：{{id}}，宿舍名：{{roomname}}</a>
+			{{/room}}
+		</div>
+	</div>
+	{{/managing}}
+	
+</body>
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/bootstrap.bundle.js"></script>
+<script>
+	$( document ).ready( function () {
+		$( function () {
+			$( '[data-toggle="tooltip"]' ).tooltip();
+		} );
+		$( "#male, #female" ).click( function () {
+			if ( $( this ).hasClass( 'btn-secondary' ) ) {
+				$( "#male, #female" ).toggleClass( 'btn-primary btn-secondary' );
+			}
+		} );
+		$( '.expand-toggle' ).click( function () {
+			$( this ).toggleClass( "btn-success btn-outline-success" );
+			$( this ).parents( '.card' ).children( '.card-body' ).first().slideToggle();
+		} );
+	} );
+</script>
+
+</html>
