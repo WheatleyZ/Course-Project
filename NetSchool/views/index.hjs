@@ -7,6 +7,7 @@
 </head>
 
 <body>
+  {{#login}}
   <div class="formArea">
     <form class="grid">
       <span class="name">用户名：</span>
@@ -18,6 +19,11 @@
       <button class="confirm">登录</button>
     </form>
   </div>
+  {{/login}}
+  {{#logged}}
+    <h1>已登陆</h1>
+    <p>您的用户名：{{name}}，密码：{{pwd}}</p>
+  {{/logged}}
 </body>
 <script src="/javascripts/jquery.min.js"></script>
 
