@@ -1,0 +1,44 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: white;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.formArea {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+  border: black 1px dashed;
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-auto-rows: auto;
+}
+
+.name {
+  grid-column: 1;
+}
+
+.nameInput {
+  grid-column: 2/4;
+}
+
+.pwd {
+  grid-column: 1;
+}
+
+.pwdInput {
+  grid-column: 2/4;
+}
+
+.confirm {
+  grid-column: 3/4;
+}

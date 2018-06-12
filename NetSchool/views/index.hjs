@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ title }}</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <div class="formArea">
+    <form class="grid">
+      <span class="name">用户名：</span>
+      <input type="text" class="nameInput">
+      <br>
+      <span class="pwd">密码：</span>
+      <input type="text" class="pwdInput">
+      <br>
+      <button class="confirm">登录</button>
+    </form>
+  </div>
+</body>
+<script src="/javascripts/jquery.min.js"></script>
+
+</html>
