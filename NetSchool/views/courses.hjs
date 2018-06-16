@@ -1,0 +1,2 @@
+<li><b>我选修的课程是：</b></li>
+{{#course}}<li>{{course}}</li>{{/course}}
