@@ -4,7 +4,7 @@ var TYPES = require('tedious').TYPES;
 var config = {
     userName: 'NetSchool',
     password: 'Test',
-    server: '127.0.0.1',
+    server: '192.168.31.208',
 };
 var connection = new Connection(config);
 connection.on('infoMessage', function (info) {
@@ -23,6 +23,7 @@ connection.on('connect', function (err) {
 
 function executeStatement() {
     var list = [];
+    var scope = this;
     request = new Request("SELECT [USERNAME],[PASSWORD] FROM [NetSchool].[dbo].[STUDENT] WHERE [USERNAME] = '张三' AND [PASSWORD] = '200';", function (err) {
         if (err) {
             // console.log(err);
@@ -37,8 +38,9 @@ function executeStatement() {
     });
     request.on('requestCompleted', function (rowCount, more, rows) {
         console.log("done");
+        console.log(list);
         connection.close();
         // console.log(list);
     });
-    connection.execSql(request);
+connection.execSql(request);
 }

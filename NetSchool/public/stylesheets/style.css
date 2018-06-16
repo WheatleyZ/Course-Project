@@ -8,6 +8,16 @@ a {
   color: #00B7FF;
 }
 
+.courses {
+  position: relative;
+  display: inline-block;
+  height: 8rem;
+  width: 10rem;
+  max-width: 300px;
+  border: 1px solid black;
+  overflow: scroll;
+}
+
 .formArea {
   position: relative;
   display: inline-block;
@@ -39,6 +49,6 @@ a {
   grid-column: 2/4;
 }
 
-.confirm {
+.loginBtn {
   grid-column: 3/4;
 }

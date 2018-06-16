@@ -4,6 +4,8 @@
 <head>
   <title>{{ title }}</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 </head>
 
 <body>
@@ -14,17 +16,46 @@
       <input type="text" class="nameInput">
       <br>
       <span class="pwd">密码：</span>
-      <input type="text" class="pwdInput">
+      <input type="password" class="pwdInput">
       <br>
-      <button class="confirm">登录</button>
+      <button type="submit" class="loginBtn">登录</button>
     </form>
   </div>
   {{/login}}
   {{#logged}}
-    <h1>已登陆</h1>
-    <p>您的用户名：{{name}}，密码：{{pwd}}</p>
+  <h1>已登陆</h1>
+  <p>您的ID：{{id}} 用户名：{{name}}</p>
+  <a href="/logout">登出</a>
+  <p>选课信息：
+    <button class="refresh">刷新</button>
+  </p>
+  <ul class="courses">
+    <li><b>我选修的课程是：</b></li>
+  </ul>
   {{/logged}}
 </body>
 <script src="/javascripts/jquery.min.js"></script>
+<script>
+  jQuery(document).ready(function () {
+    {{#login}}
+    $('.loginBtn').click(function () {
+      $.post("/login", {
+        username: $('.nameInput').val(),
+        password: $('.pwdInput').val()
+      })
+      .done(function(){
+        location.href="/";
+      })
+    });
+    {{/login}}
+    {{#logged}}
+    $('.refresh').click(function () {
+      $.get("/courses",function(data) {
+        $('.courses').html(data);
+      });
+    })
+    {{/logged}}
+  });
+</script>
 
 </html>
