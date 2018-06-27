@@ -1,2 +1,4 @@
 */node_modules
 .DS_Store
+DMS.Node/routes/managing.js
+DMS.Node/routes/requests.js

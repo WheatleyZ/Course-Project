@@ -9,16 +9,20 @@ var connection = sql.createConnection({
 });
 connection.connect();
 
-router.get('/', function (req, res, next) {
+router.get( '/', function ( req, res, next ) {
+	let loginstate = ( req.session.userID == "manager" )
 	res.render('requests', {
 		title: "宿舍管理系统-申请选择",
-		home: 1
+		home: 1,
+		logged: loginstate
 	});
 });
 router.get('/repair', function (req, res, next) {
+	let loginstate = ( req.session.userID == "manager" )
 	res.render('requests', {
 		title: "宿舍管理系统-维修申请",
 		repair: 1,
+		logged: loginstate,
 		repairdetail: [{
 			id: 1,
 			name: "李四",
@@ -29,9 +33,11 @@ router.get('/repair', function (req, res, next) {
 	});
 });
 router.get('/visit', function (req, res, next) {
+	let loginstate = ( req.session.userID == "manager" )
 	res.render('requests', {
 		title: "宿舍管理系统-访客申请",
 		visitor: 1,
+		logged: loginstate,
 		visitordetail: [{
 			id: 1,
 			name: "张三",

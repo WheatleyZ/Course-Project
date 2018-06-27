@@ -18,7 +18,7 @@
 </head>
 
 <body class="p-0" style="font-family:Noto Sans SC">
-	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">
 			<img src="/images/brand.svg" class="ml-3 mr-2" width="30" height="30" alt="Nw" style="vertical-align:bottom">宿舍管理系统
 		</a>
@@ -45,6 +45,7 @@
 						<a class="dropdown-item" href="/requests/visit">访客登记</a>
 					</div>
 				</li>
+				{{#logged}}
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="/managing" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
 					 aria-expanded="false">
@@ -52,18 +53,23 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<h6 class="dropdown-header">管理</h6>
-						<a class="dropdown-item" href="/managing">管理页面</a>
-						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="/managing/repair">维修填报</a>
+						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="/managing/visit">访客登记</a>
 					</div>
 				</li>
+				{{/logged}}
 			</ul>
+	 {{#logged}}
+	<button class="btn btn-outline-danger my-2 my-sm-0" id="logout">登出</button>
+	{{/logged}} {{^logged}}
+	<button class="btn btn-outline-primary my-2 my-sm-0" id="login">登录</button>
+	{{/logged}}
 		</div>
 	</nav>
 	<div class="container mt-4">
-		{{#repair}}
-		<div class="card bg-dark text-white">
+		 {{#repair}}
+		<div class="card">
 			<div class="card-header">
 				<h5 class="card-title mt-2">维修申请系统</h5>
 			</div>
@@ -72,16 +78,16 @@
 					<div class="col-lg">
 						<form>
 							<div class="form-group">
-								<label for="name">姓名</label>
-								<input class="form-control bg-dark text-light" id="name" placeholder="姓名">
+								<label for="room">宿舍号</label>
+								<input class="form-control" id="room" placeholder="宿舍号">
 							</div>
 							<div class="form-group">
-								<label for="room">宿舍</label>
-								<input class="form-control bg-dark text-light" id="room" placeholder="宿舍号">
+								<label for="date">预约维修日期</label>
+								<input type="date" class="form-control" id="date" placeholder="预约维修日期">
 							</div>
 							<div class="form-group">
-								<label for="item">报修项目</label>
-								<input type="text" class="form-control bg-dark text-light" id="item" placeholder="报修项目">
+								<label for="contact">联系方式</label>
+								<input type="text" class="form-control" id="contact" placeholder="联系方式">
 							</div>
 						</form>
 					</div>
@@ -89,15 +95,15 @@
 						<form>
 							<div class="form-group">
 								<label for="reason">报修原因</label>
-								<textarea class="form-control bg-dark text-light" id="reason" rows="3"></textarea>
+								<textarea class="form-control" id="reason" rows="3"></textarea>
 							</div>
 						</form>
-						<button type="button" class="btn btn-success float-right">提交</button>
+						<button type="button" class="btn btn-success float-right" id="commit1">提交</button>
 					</div>
 				</div>
 			</div>
 			{{/repair}} {{#visitor}}
-			<div class="card bg-dark text-white">
+			<div class="card">
 				<div class="card-header">
 					<h5 class="card-title mt-2">访客登记系统</h5>
 				</div>
@@ -106,19 +112,19 @@
 						<div class="col-lg">
 							<form>
 								<div class="form-group">
-									<label>姓名</label>
-									<input class="form-control bg-dark text-white" id="name" placeholder="姓名">
+									<label>访客姓名</label>
+									<input class="form-control" id="name2" placeholder="姓名">
 								</div>
 								<div class="form-group">
 									<label>性别</label>
-									<div class="btn-group container" style="margin:5px 0px;padding:0px">
+									<div class="btn-group container" id="gendertollge" style="margin:5px 0px;padding:0px">
 										<button type="button" id="male" class="btn btn-primary">男</button>
 										<button type="button" id="female" class="btn btn-secondary">女</button>
 									</div>
 								</div>
 								<div class="form-group">
 									<label>联系方式</label>
-									<input type="text" class="form-control bg-dark text-white" id="contact" placeholder="联系方式">
+									<input type="text" class="form-control" id="contact2" placeholder="联系方式">
 								</div>
 							</form>
 						</div>
@@ -126,18 +132,14 @@
 							<form>
 								<div class="form-group">
 									<label>来访时间</label>
-									<input type="datetime-local" class="form-control bg-dark text-white" id="intime">
-								</div>
-								<div class="form-group">
-									<label>离开时间</label>
-									<input type="datetime-local" class="form-control bg-dark text-white" id="outtime">
+									<input type="date" class="form-control" id="date2">
 								</div>
 								<div class="form-group">
 									<label>来访事由</label>
-									<textarea class="form-control bg-dark text-white" id="exampleFormControlTextarea1" rows="3"></textarea>
+									<textarea class="form-control" id="reason2" rows="3"></textarea>
 								</div>
 							</form>
-							<button type="button" class="btn btn-success float-right">提交</button>
+							<button type="button" class="btn btn-success float-right" id="commit2">提交</button>
 						</div>
 					</div>
 				</div>
@@ -150,6 +152,17 @@
 <script src="/javascripts/bootstrap.bundle.js"></script>
 <script>
 	$( document ).ready( function () {
+		{{#logged}}
+		$( '#logout' ).click( function () {
+			location.href="/logout"
+		} );
+		{{/logged}}
+		{{^logged}}
+		$( '#login' ).click( function () {
+			location.href = "/login"
+		} );
+		{{/logged}}
+
 		$( function () {
 			$( '[data-toggle="popover"]' ).popover();
 		} );
@@ -161,6 +174,31 @@
 		$( '.expand-toggle' ).click( function () {
 			$( this ).toggleClass( "btn-success btn-outline-success" );
 			$( this ).parents( '.card' ).children( '.card-body' ).first().slideToggle();
+		} );
+		$( '#commit1' ).click( function () {
+			var repairdata = {
+				room: $( "#room" ).val(),
+				date: $( "#date" ).val(),
+				reason: $( "#reason" ).val(),
+				contact: $( "#contact" ).val()
+			};
+			$.post( "/requests/repair", repairdata, function ( res ) {
+				alert( "提交成功" );
+			} )
+		} );
+		$( '#commit2' ).click( function () {
+			var visitordata = {
+				name: $( "#name2" ).val(),
+				gender: $( "#male" ).hasClass( "btn-primary" ) ? "男" : "女",
+				room2: $( "#room2" ).val(),
+				date2: $( "#date2" ).val(),
+				reason2: $( "#reason2" ).val(),
+				contact2: $( "#contact2" ).val()
+			};
+			
+			$.post( "/requests/visit", visitordata, function ( res ) {
+				alert( "提交成功" );
+			} )
 		} );
 	} );
 </script>
